@@ -47,7 +47,7 @@ Data is collected using sensors and transmitted wirelessly via Bluetooth for rea
 - Circuit design
 
 ## 🖼️ Output
-(Add images here)
+circuit_image.png
 
 ## 📁 Project Files
 - Code → /code
