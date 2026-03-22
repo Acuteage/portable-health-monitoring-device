@@ -1,0 +1,83 @@
+// Flex sensor pins
+int f1 = A0;
+int f2 = A1;
+int f3 = A2;
+int f4 = A3;
+int f5 = A4;
+
+// Store live values
+int v[5];
+
+// Thresholds (auto-adjust idea)
+int threshold = 550;
+
+// Function to convert gesture → letter
+char detectGesture(int v1, int v2, int v3, int v4, int v5) {
+
+  // Convert to binary (0 = straight, 1 = bent)
+  int b1 = v1 > threshold;
+  int b2 = v2 > threshold;
+  int b3 = v3 > threshold;
+  int b4 = v4 > threshold;
+  int b5 = v5 > threshold;
+
+  // Unique combinations → letters
+
+  if (b1&&b2&&b3&&b4&&b5) return 'A';
+  if (!b1&&!b2&&!b3&&!b4&&!b5) return 'B';
+  if (b1&&!b2&&!b3&&!b4&&b5) return 'C';
+  if (!b1&&!b2&&b3&&b4&&b5) return 'D';
+  if (b1&&b2&&b3&&!b4&&!b5) return 'E';
+  if (!b1&&b2&&!b3&&b4&&!b5) return 'F';
+  if (b1&&!b2&&b3&&!b4&&b5) return 'G';
+  if (!b1&&b2&&b3&&!b4&&!b5) return 'H';
+  if (b1&&b2&&!b3&&!b4&&!b5) return 'I';
+  if (!b1&&!b2&&!b3&&b4&&b5) return 'J';
+  if (b1&&b2&&!b3&&b4&&!b5) return 'K';
+  if (!b1&&b2&&!b3&&!b4&&b5) return 'L';
+  if (b1&&!b2&&b3&&b4&&!b5) return 'M';
+  if (!b1&&b2&&b3&&b4&&!b5) return 'N';
+  if (b1&&!b2&&!b3&&b4&&b5) return 'O';
+  if (!b1&&!b2&&b3&&!b4&&!b5) return 'P';
+  if (b1&&b2&&!b3&&!b4&&b5) return 'Q';
+  if (!b1&&b2&&b3&&!b4&&b5) return 'R';
+  if (b1&&!b2&&b3&&!b4&&!b5) return 'S';
+  if (!b1&&!b2&&!b3&&b4&&!b5) return 'T';
+  if (b1&&b2&&b3&&b4&&!b5) return 'U';
+  if (!b1&&b2&&!b3&&b4&&b5) return 'V';
+  if (b1&&!b2&&!b3&&b4&&!b5) return 'W';
+  if (!b1&&!b2&&b3&&b4&&!b5) return 'X';
+  if (b1&&b2&&!b3&&b4&&b5) return 'Y';
+  if (!b1&&b2&&!b3&&!b4&&!b5) return 'Z';
+
+  return '?'; // unknown
+}
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Sign Language Translator Ready");
+}
+
+void loop() {
+
+  // Read all sensors
+  v[0] = analogRead(f1);
+  v[1] = analogRead(f2);
+  v[2] = analogRead(f3);
+  v[3] = analogRead(f4);
+  v[4] = analogRead(f5);
+
+  // Detect letter
+  char letter = detectGesture(v[0], v[1], v[2], v[3], v[4]);
+
+  // Print values + output
+  Serial.print("Values: ");
+  for(int i=0;i<5;i++){
+    Serial.print(v[i]); Serial.print(" ");
+  }
+
+  Serial.print(" -> ");
+  Serial.println(letter);
+
+  delay(400);
+}

@@ -1,0 +1,8 @@
+Arduino Nano
+Flex Sensors (x5)
+10k Resistors
+16x2 LCD Display (I2C)
+HC-05 Bluetooth Module (optional)
+Li-ion Battery
+TP4056 Charging Module
+Glove (base structure)
